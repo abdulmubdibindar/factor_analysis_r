@@ -51,6 +51,7 @@ Now that we’ve arrived at probable number number of factors, let’s start off
 * `fm` - One of the factor extraction techniques like Minimum Residual (OLS), Maximum Liklihood, Principal Axis etc. In this case, we will select oblique rotation (rotate = “oblimin”) as we believe that there is correlation in the factors. Note that Varimax rotation is used under the assumption that the factors are completely uncorrelated. We will use Ordinary Least Squared/Minres factoring (fm = “minres”), as it is known to provide results similar to Maximum Likelihood without assuming multivariate normal distribution and derives solutions through iterative eigendecomposition like principal axis.
 
 ```{r}
-
+threefactor <- fa(data,nfactors = 3,rotate = "oblimin",fm="minres")
+print(threefactor)
 ```
 
