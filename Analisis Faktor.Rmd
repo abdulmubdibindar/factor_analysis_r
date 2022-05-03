@@ -3,6 +3,16 @@ title: "Analisis Faktor "
 output: html_notebook
 ---
 
+Source of tutorial: https://rpubs.com/Pun_/Exploratory_factor_Analysis
+
+Import data
+```{r}
+data <- read.csv("EFA.csv")
+head(data)
+```
+
+# Package Installation
+
 First we need to install the needed packages.
 
 ```{r}
@@ -15,17 +25,32 @@ library(psych)
 library(GPArotation)
 ```
 
-Import data
-```{r}
-data <- read.csv("EFA.csv")
-head(data)
-```
+# Number of Factors
 
 Finding the number of factor that will be selected for factor analysis. This is done via methods such as 'Parallel Analysis' and 'eigenvalue', etc.
+
+## Parallel Analysis
 
 Here we specify the data frame and factor method (`minres` in our case). Run the following to find an acceptable number of factors and generate the scree plot:
 
 ```{r}
-fa.parallel(data, fm = 'minres', fa = 'fa')
+parallel <- fa.parallel(data, fm = 'minres', fa = 'fa')
+```
+
+The blue line shows eigenvalues of actual data and the two red lines (placed on top of each other) show simulated and resampled data. Here we look at the large drops in the actual data and spot the point where it levels off to the right. Also we locate the point of inflection - the point where the gap between simulated data and actual data tends to be minimum.
+
+Looking at this plot and parallel analysis, anywhere between 2 to 5 factors factors would be good choice.
+
+## Factor Analysis
+
+Now that we’ve arrived at probable number number of factors, let’s start off with 3 as the number of factors. In order to perform factor analysis, we’ll use `psych` package’s `fa()` function. Given below are the arguments we’ll supply:
+
+* `r` - Raw data or correlation or covariance matrix
+* `nfactors` - Number of factors to extract
+* `rotate` - Although there are various types rotations, Varimax and Oblimin are most popular
+* `fm` - One of the factor extraction techniques like Minimum Residual (OLS), Maximum Liklihood, Principal Axis etc. In this case, we will select oblique rotation (rotate = “oblimin”) as we believe that there is correlation in the factors. Note that Varimax rotation is used under the assumption that the factors are completely uncorrelated. We will use Ordinary Least Squared/Minres factoring (fm = “minres”), as it is known to provide results similar to Maximum Likelihood without assuming multivariate normal distribution and derives solutions through iterative eigendecomposition like principal axis.
+
+```{r}
+
 ```
 
